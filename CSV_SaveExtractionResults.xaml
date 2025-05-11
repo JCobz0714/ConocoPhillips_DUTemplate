@@ -1,13 +1,10 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="CSV_SaveExtractionResults" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_ExtractionResults" Type="InArgument(x:String)" />
-    <x:Property Name="in_VariationAsset" Type="InArgument(x:String)" />
-    <x:Property Name="in_CSVFileName" Type="InArgument(x:String)" />
     <x:Property Name="in_OutputFolderPath" Type="InArgument(x:String)" />
     <x:Property Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
     <x:Property Name="in_DataSet" Type="InArgument(sd:DataSet)" />
-    <x:Property Name="out_ProcessedData" Type="OutArgument(x:String)" />
+    <x:Property Name="out_ProcessedData" Type="OutArgument(sd:DataTable)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
@@ -112,7 +109,7 @@
       <x:Boolean x:Key="ShouldExpandAll">False</x:Boolean>
     </scg:Dictionary>
   </sap:WorkflowViewStateService.ViewState>
-  <Sequence DisplayName="CSV_SaveExtractionResults" sap:VirtualizedContainerService.HintSize="912.0000000000001,12889.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="CSV_SaveExtractionResults" sap:VirtualizedContainerService.HintSize="1653,12884" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="DocumentData" />
       <Variable x:TypeArguments="x:String" Name="Variant_Asset" />
@@ -137,9 +134,9 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="514.4,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[String.Format(&quot;Processing extracted data from document: {0}&quot;, in_TransactionItem.SpecificContent(&quot;ReferenceToFileName&quot;).ToString)]" />
-    <ui:ReadRange Range="{x:Null}" WorkbookPathResource="{x:Null}" AddHeaders="True" DataTable="[DocumentData]" DisplayName="Read Range Workbook" sap:VirtualizedContainerService.HintSize="514.4,120" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="Sheet1" WorkbookPath="Data\ProductionStatement_template.xlsx" />
-    <Switch x:TypeArguments="x:String" DisplayName="Switch" Expression="[in_TransactionItem.SpecificContent(&quot;VariantAsset&quot;).ToString]" sap:VirtualizedContainerService.HintSize="514.4,11688" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="515,173" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[String.Format(&quot;Processing extracted data from document: {0}&quot;, in_TransactionItem.SpecificContent(&quot;ReferenceToFileName&quot;).ToString)]" />
+    <ui:ReadRange Range="{x:Null}" WorkbookPathResource="{x:Null}" AddHeaders="True" DataTable="[DocumentData]" DisplayName="Read Range Workbook" sap:VirtualizedContainerService.HintSize="515,120" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="Sheet1" WorkbookPath="Data\ProductionStatement_template.xlsx" />
+    <Switch x:TypeArguments="x:String" DisplayName="Switch" Expression="[in_TransactionItem.SpecificContent(&quot;VariantAsset&quot;).ToString]" sap:VirtualizedContainerService.HintSize="515,11685" sap2010:WorkflowViewState.IdRef="Switch`1_1">
       <Switch.Default>
         <Sequence DisplayName="Default" sap:VirtualizedContainerService.HintSize="512.8,89.6" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <sap:WorkflowViewStateService.ViewState>

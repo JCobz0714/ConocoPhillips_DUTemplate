@@ -232,7 +232,7 @@
                   </InArgument>
                 </p3:FormExtractor.PredictionId>
               </p3:FormExtractor>
-              <p3:DuAppExtractor ErrorMessage="{x:Null}" RuntimeAssetPath="{x:Null}" RuntimeTenantUrl="{x:Null}" WarningMessage="{x:Null}" DisplayName="DU Project Extractor" sap:VirtualizedContainerService.HintSize="282,162" sap2010:WorkflowViewState.IdRef="DuAppExtractor_2" PersistenceId="UIf5022ff017394f9eb704716751e714e6" SelectedProject="ConocoPhillips_Modern" SelectedVersion="ConocoPhillips_Separator" TimeoutMs="900000">
+              <p3:DuAppExtractor RuntimeAssetPath="{x:Null}" RuntimeTenantUrl="{x:Null}" DisplayName="DU Project Extractor" ErrorMessage="" sap:VirtualizedContainerService.HintSize="282,162" sap2010:WorkflowViewState.IdRef="DuAppExtractor_2" PersistenceId="UIf5022ff017394f9eb704716751e714e6" SelectedProject="ConocoPhillips_Modern" SelectedVersion="ConocoPhillips_Separator" TimeoutMs="900000" WarningMessage="">
                 <p3:DuAppExtractor.AvailableAssetPaths>
                   <x:Array Type="x:String">
                     <x:String>Shared/System1_Credential</x:String>

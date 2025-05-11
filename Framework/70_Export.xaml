@@ -4,6 +4,7 @@
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
     <x:Property sap2010:Annotation.AnnotationText="Used to control the number of attempts of retrying in case of a system exception." Name="in_MaxAttempts" Type="InArgument(x:Int32)" />
     <x:Property sap2010:Annotation.AnnotationText="Used to control the amount of time between retries in the Retry Scope activity." Name="in_RetryInterval" Type="InArgument(x:TimeSpan)" />
+    <x:Property Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
@@ -45,6 +46,7 @@
       <x:String>UiPath.IntelligentOCR.Activities.DataExtraction</x:String>
       <x:String>GlobalVariablesNamespace</x:String>
       <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Linq.Expressions</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -99,12 +101,22 @@
       <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
       <AssemblyReference>System.Security.Permissions</AssemblyReference>
       <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Data.SqlClient</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Post-extraction &amp; Data Export&#xA;&#xA;Post extraction - any logic that must be executed after data extraction and prior to the data export belongs here (eg: format the data according to an export schema)&#xA;&#xA;Data Export - output the data to make it usable by the Business users or by subsequent processes. We recommend using UiPath's DataService." DisplayName="Export" sap:VirtualizedContainerService.HintSize="1653,1124" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Post-extraction &amp; Data Export&#xA;&#xA;Post extraction - any logic that must be executed after data extraction and prior to the data export belongs here (eg: format the data according to an export schema)&#xA;&#xA;Data Export - output the data to make it usable by the Business users or by subsequent processes. We recommend using UiPath's DataService." DisplayName="Export" sap:VirtualizedContainerService.HintSize="1653,1307" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Used to store the path to the file where the extracted data will be saved." Name="outputPath" />
       <Variable x:TypeArguments="sd:DataSet" sap2010:Annotation.AnnotationText="Used to store the exported data from the ExtractionResults in the Export Extraction Results activity." Name="exportDataSet" />
+      <Variable x:TypeArguments="sd:DataTable" Name="ProcessedExtractedData" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -113,7 +125,7 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log Message - Start Data Export" sap:VirtualizedContainerService.HintSize="434,173" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_DataExportStart&quot;) + &quot; &quot; + in_ExtractionResults.ResultsDocument.DocumentTypeId + &quot; (pag &quot; +  (in_ExtractionResults.ResultsDocument.Bounds.StartPage + 1).ToString + &quot;-&quot; + (in_ExtractionResults.ResultsDocument.Bounds.StartPage + in_ExtractionResults.ResultsDocument.Bounds.PageCount).ToString + &quot;)&quot; + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
-    <ui:Comment DisplayName="Comment - Example Export" sap:VirtualizedContainerService.HintSize="434,167" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Please note that the below example is intended for illustrative purposes only. The export to excel was just an example. Ideally you would want to use the data extracted in another process." />
+    <ui:Comment DisplayName="Comment - Example Export" sap:VirtualizedContainerService.HintSize="434,164" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Please note that the below example is intended for illustrative purposes only. The export to excel was just an example. Ideally you would want to use the data extracted in another process." />
     <Assign sap2010:Annotation.AnnotationText="Adding the page range here ensures a unique export name in case PDF splitting is DISABLED" DisplayName="Assign Output File Name" sap:VirtualizedContainerService.HintSize="434,156" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[outputPath]</OutArgument>
@@ -134,9 +146,19 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </p1:ExportExtractionResults>
-    <ui:RetryScope sap2010:Annotation.AnnotationText="Exports could be stored in a shared location. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." DisplayName="Retry Scope - Export Data" sap:VirtualizedContainerService.HintSize="434,285" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
+    <ui:RetryScope sap2010:Annotation.AnnotationText="Exports could be stored in a shared location. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." DisplayName="Retry Scope - Export Data" sap:VirtualizedContainerService.HintSize="434,471" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
       <ui:RetryScope.ActivityBody>
-        <ActivityAction />
+        <ActivityAction>
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="CSV_SaveExtractionResults - Invoke Workflow File (CSV_SaveExtractionResults.xaml)" sap:VirtualizedContainerService.HintSize="335,216" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="CSV_SaveExtractionResults.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="x:String" x:Key="in_OutputFolderPath">[outputPath]</InArgument>
+              <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">[in_TransactionItem]</InArgument>
+              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[in_Config]</InArgument>
+              <InArgument x:TypeArguments="sd:DataSet" x:Key="in_DataSet">[exportDataSet]</InArgument>
+              <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_ProcessedData">[ProcessedExtractedData]</OutArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+        </ActivityAction>
       </ui:RetryScope.ActivityBody>
       <ui:RetryScope.Condition>
         <ActivityFunc x:TypeArguments="x:Boolean" />
