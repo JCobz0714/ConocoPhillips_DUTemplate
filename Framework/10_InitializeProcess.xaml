@@ -103,18 +103,18 @@
       <AssemblyReference>WindowsBase</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Workflow loads the Taxonomy and updates the Config Dictionary with Asset values fetched from Orchestrator." DisplayName="InitializeProcess" sap:VirtualizedContainerService.HintSize="1587,2059" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Workflow loads the Taxonomy and updates the Config Dictionary with Asset values fetched from Orchestrator." DisplayName="InitializeProcess" sap:VirtualizedContainerService.HintSize="1653,2379" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - InitStarted" sap:VirtualizedContainerService.HintSize="633,173" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[io_Config(&quot;LogMessage_InitStarted&quot;) + Environment.NewLine + io_Config(&quot;logKey&quot;)]" />
-    <ui:RetryScope sap2010:Annotation.AnnotationText="Although unusual, the connection to the Orchestrator might time-out. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." ContinueOnError="False" DisplayName="Retry Scope - InitializeProcess" sap:VirtualizedContainerService.HintSize="633,1832" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
+    <ui:LogMessage DisplayName="Log Message - InitStarted" sap:VirtualizedContainerService.HintSize="574,173" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="{x:Null}" Message="[io_Config(&quot;LogMessage_InitStarted&quot;) + Environment.NewLine + io_Config(&quot;logKey&quot;)]" />
+    <ui:RetryScope sap2010:Annotation.AnnotationText="Although unusual, the connection to the Orchestrator might time-out. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." ContinueOnError="False" DisplayName="Retry Scope - InitializeProcess" sap:VirtualizedContainerService.HintSize="574,2152" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
       <ui:RetryScope.ActivityBody>
         <ActivityAction>
-          <Sequence sap2010:Annotation.AnnotationText="This sequence loads the Taxonomy &amp; updates the Config Dictionary with Asset values fetched from Orchestrator." DisplayName="LoadAllSettings" sap:VirtualizedContainerService.HintSize="591,1592" sap2010:WorkflowViewState.IdRef="Sequence_4">
+          <Sequence sap2010:Annotation.AnnotationText="This sequence loads the Taxonomy &amp; updates the Config Dictionary with Asset values fetched from Orchestrator." DisplayName="LoadAllSettings" sap:VirtualizedContainerService.HintSize="532,1912" sap2010:WorkflowViewState.IdRef="Sequence_4">
             <Sequence.Variables>
               <Variable x:TypeArguments="sd:DataTable" sap2010:Annotation.AnnotationText="Intermediary DataTable structure used for reading from the configuration file." Name="configDT" />
               <Variable x:TypeArguments="x:Object" sap2010:Annotation.AnnotationText="Used for retrieving the assets values from Orchestrator." Name="assetValue" />
@@ -126,15 +126,15 @@
                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <p1:LoadTaxonomy DisplayName="Load Taxonomy of Project" sap:VirtualizedContainerService.HintSize="557,136" sap2010:WorkflowViewState.IdRef="LoadTaxonomy_1" Taxonomy="[out_DocTaxonomy]" />
-            <ui:ReadRange Range="{x:Null}" WorkbookPathResource="{x:Null}" AddHeaders="True" DataTable="[configDT]" DisplayName="Read range Assets" sap:VirtualizedContainerService.HintSize="557,120" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="[in_AssetsSheet]" WorkbookPath="[in_ConfigFile]" />
-            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[configDT]" DisplayName="For each row - Get Assets" sap:VirtualizedContainerService.HintSize="557,1155" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+            <p1:LoadTaxonomy DisplayName="Load Taxonomy of Project" sap:VirtualizedContainerService.HintSize="498,136" sap2010:WorkflowViewState.IdRef="LoadTaxonomy_1" Taxonomy="[out_DocTaxonomy]" />
+            <ui:ReadRange AddHeaders="True" DataTable="[configDT]" DisplayName="Read range Assets" sap:VirtualizedContainerService.HintSize="498,120" sap2010:WorkflowViewState.IdRef="ReadRange_1" Password="{x:Null}" Range="{x:Null}" SheetName="[in_AssetsSheet]" WorkbookPath="[in_ConfigFile]" WorkbookPathResource="{x:Null}" />
+            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[configDT]" DisplayName="For each row - Get Assets" sap:VirtualizedContainerService.HintSize="498,1474" sap2010:WorkflowViewState.IdRef="ForEachRow_1" MaxIterations="{x:Null}" Values="{x:Null}">
               <ui:ForEachRow.Body>
                 <ActivityAction x:TypeArguments="sd:DataRow">
                   <ActivityAction.Argument>
                     <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
                   </ActivityAction.Argument>
-                  <If Condition="[not String.IsNullOrWhiteSpace(row(&quot;Name&quot;).ToString)]" DisplayName="If empty row, skip" sap:VirtualizedContainerService.HintSize="472,935" sap2010:WorkflowViewState.IdRef="If_1">
+                  <If Condition="[not String.IsNullOrWhiteSpace(row(&quot;Name&quot;).ToString)]" DisplayName="If empty row, skip" sap:VirtualizedContainerService.HintSize="472,1254" sap2010:WorkflowViewState.IdRef="If_1">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -142,7 +142,7 @@
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
                     <If.Then>
-                      <TryCatch sap2010:Annotation.AnnotationText="The Asset's value is retrieved and stored in the io_Config dictionary. If the key already exists, the value is overwritten.&#xA;&#xA;In case of an exception (the value cannot be retrieved):&#xA;  - If the row(&quot;Name&quot;) key already exists the io_Config dictionary, move to the next Asset&#xA;  - If the row(&quot;Name&quot;) key does NOT exist in the io_Config dictionary, log Error &amp; Throw Exception because the asset failed to load." DisplayName="Try Catch - Get Asset" sap:VirtualizedContainerService.HintSize="470,787" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+                      <TryCatch sap2010:Annotation.AnnotationText="The Asset's value is retrieved and stored in the io_Config dictionary. If the key already exists, the value is overwritten.&#xA;&#xA;In case of an exception (the value cannot be retrieved):&#xA;  - If the row(&quot;Name&quot;) key already exists the io_Config dictionary, move to the next Asset&#xA;  - If the row(&quot;Name&quot;) key does NOT exist in the io_Config dictionary, log Error &amp; Throw Exception because the asset failed to load." DisplayName="Try Catch - Get Asset" sap:VirtualizedContainerService.HintSize="470,1106" sap2010:WorkflowViewState.IdRef="TryCatch_1">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
@@ -185,16 +185,16 @@
                               <ActivityAction.Argument>
                                 <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
                               </ActivityAction.Argument>
-                              <If Condition="[not io_Config.Keys.Contains(row(&quot;Name&quot;).ToString)]" DisplayName="If - Check if Missing Setting" sap:VirtualizedContainerService.HintSize="334.4,152.8" sap2010:WorkflowViewState.IdRef="If_3">
+                              <If Condition="[not io_Config.Keys.Contains(row(&quot;Name&quot;).ToString)]" DisplayName="If - Check if Missing Setting" sap:VirtualizedContainerService.HintSize="468,472" sap2010:WorkflowViewState.IdRef="If_3">
                                 <If.Then>
-                                  <Sequence DisplayName="Asset Failed to Load Sequence" sap:VirtualizedContainerService.HintSize="416,382.4" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                                  <Sequence DisplayName="Asset Failed to Load Sequence" sap:VirtualizedContainerService.HintSize="416,346" sap2010:WorkflowViewState.IdRef="Sequence_7">
                                     <sap:WorkflowViewStateService.ViewState>
                                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                       </scg:Dictionary>
                                     </sap:WorkflowViewStateService.ViewState>
-                                    <ui:LogMessage DisplayName="Log Message - Error - Asset Failed To Load" sap:VirtualizedContainerService.HintSize="353.6,182.4" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Error" Message="[io_Config(&quot;ErrorMessage_AssetFailedToLoad&quot;) + &quot; &quot; + row(&quot;Asset&quot;).ToString]" />
-                                    <Throw DisplayName="Throw AssetFailedToLoad Exception" Exception="[new Exception(io_Config(&quot;ErrorMessage_AssetFailedToLoad&quot;) + &quot; &quot; + row(&quot;Asset&quot;).ToString)]" sap:VirtualizedContainerService.HintSize="353.6,113.6" sap2010:WorkflowViewState.IdRef="Throw_2" />
+                                    <ui:LogMessage DisplayName="Log Message - Error - Asset Failed To Load" sap:VirtualizedContainerService.HintSize="382,173" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Error" Message="[io_Config(&quot;ErrorMessage_AssetFailedToLoad&quot;) + &quot; &quot; + row(&quot;Asset&quot;).ToString]" />
+                                    <Throw DisplayName="Throw AssetFailedToLoad Exception" Exception="[new Exception(io_Config(&quot;ErrorMessage_AssetFailedToLoad&quot;) + &quot; &quot; + row(&quot;Asset&quot;).ToString)]" sap:VirtualizedContainerService.HintSize="382,113" sap2010:WorkflowViewState.IdRef="Throw_2" />
                                   </Sequence>
                                 </If.Then>
                                 <If.Else>
@@ -204,8 +204,14 @@
                             </ActivityAction>
                           </Catch>
                         </TryCatch.Catches>
+                        <TryCatch.Finally>
+                          <Sequence DisplayName="Finally" sap2010:WorkflowViewState.IdRef="Sequence_10" />
+                        </TryCatch.Finally>
                       </TryCatch>
                     </If.Then>
+                    <If.Else>
+                      <Sequence DisplayName="Else" sap2010:WorkflowViewState.IdRef="Sequence_9" />
+                    </If.Else>
                   </If>
                 </ActivityAction>
               </ui:ForEachRow.Body>
@@ -216,7 +222,7 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </ui:ForEachRow>
-            <ui:Comment DisplayName="Comment - Custom Init" sap:VirtualizedContainerService.HintSize="556.8,79.2" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Write your custom Initialization code here" />
+            <ui:Comment DisplayName="Comment - Custom Init" sap:VirtualizedContainerService.HintSize="498,80" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Write your custom Initialization code here" />
           </Sequence>
         </ActivityAction>
       </ui:RetryScope.ActivityBody>
