@@ -2,7 +2,7 @@
   "name": "ProductionStatement_DUProcess",
   "projectId": "ea6eb352-f666-44e9-b502-6c78b327af88",
   "description": "Document Understanding process for ConocoPhillips project",
-  "main": "Main-ActionCenter.xaml",
+  "main": "Main-Attended.xaml",
   "dependencies": {
     "UiPath.DocumentUnderstanding.ML.Activities": "[1.31.1]",
     "UiPath.Excel.Activities": "[2.24.3]",
